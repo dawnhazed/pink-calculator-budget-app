@@ -50,22 +50,65 @@ struct CalculatorView: View {
                         )
                     
                     Text(value)
+                        .font(.custom("Press Start 2P", size: 25))
                         
+                } .padding([.top, .bottom], )
+                
+                ForEach(buttons, id: \.self) { row in
+                    HStack(spacing: 12) {
+                        ForEach(row, id: \.self) { item in
+                            self.createButton(for: item)
+                        }
+                    }
+                    .padding(.vertical, 2)
                 }
-                
-//                ForEach(buttons, id: \.self) { row in
-//                    HStack(spacing: 12) {
-//                        ForEach
-//                    }
-//                }
-                
-               
             }
         }
     }
     
+    private func createButton(for item: CalcButton) -> some View {
+            Button(action: {
+                self.didTap(button: item)
+            }) {
+                ZStack {
+                    
+                    RoundedRectangle(cornerRadius: 10)
+                        .frame(width: 60, height: 30)
+                        .foregroundColor(item.buttonColor)
+                    
+                    
+                    Text(item.rawValue)
+                        .font(.custom("Press Start 2P", size: 15))
+                        .foregroundColor(.black)
+                        .frame(width: 60, height: 30)
+                        //.background(item.buttonColor)
+                        .clipShape(RoundedRectangle(cornerRadius: 12))
+                }
+            }
+        }
+    
     func didTap(button: CalcButton) {
+        switch button {
+            
+        case .enter:
+            let runningValue = self.runningNumber
+            let currentValue = Int(self.value) ?? 0
+            
+        case .clear:
+            self.value = "0"
         
+        case .decimal:
+            break
+            
+        default:
+            let number = button.rawValue
+            
+            if self.value == "0" {
+                value = number
+            } else {
+                self.value = "\(self.value)\(number)"
+            }
+        }
     }
 }
 

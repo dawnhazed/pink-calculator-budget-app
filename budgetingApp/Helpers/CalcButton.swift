@@ -32,7 +32,7 @@ enum CalcButton: String {
         case .triple:
             return .gray
         default:
-            return .primary
+            return .white
         }
     }
 }
