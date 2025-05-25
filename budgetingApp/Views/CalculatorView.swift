@@ -11,6 +11,7 @@ struct CalculatorView: View {
     
     @State var value = "0"
     @State var runningNumber = 0
+    @State var showingSheet = false
     // @State var currentOperation: Operation = .none
     
     let buttons : [[CalcButton]] = [
@@ -64,12 +65,17 @@ struct CalculatorView: View {
                 }
             }
         }
+        .sheet(isPresented: $showingSheet) {
+            SheetView()
+                .presentationDetents([.medium])
+        }
     }
     
     private func createButton(for item: CalcButton) -> some View {
             Button(action: {
                 self.didTap(button: item)
             }) {
+                
                 ZStack {
                     
                     RoundedRectangle(cornerRadius: 10)
@@ -77,12 +83,25 @@ struct CalculatorView: View {
                         .foregroundColor(item.buttonColor)
                     
                     
-                    Text(item.rawValue)
-                        .font(.custom("Press Start 2P", size: 15))
-                        .foregroundColor(.black)
-                        .frame(width: 60, height: 30)
-                        //.background(item.buttonColor)
-                        .clipShape(RoundedRectangle(cornerRadius: 12))
+                    if item.rawValue == "Settings" {
+                        Image(systemName: "gear")
+                            .font(.custom("Press Start 2P", size: 15))
+                            .foregroundColor(.black)
+                            .frame(width: 60, height: 30)
+                            .clipShape(RoundedRectangle(cornerRadius: 12))
+                    } else if item.rawValue == "DEL" {
+                        Image(systemName: "delete.left")
+                            .font(.custom("Press Start 2P", size: 15))
+                            .foregroundColor(.black)
+                            .frame(width: 60, height: 30)
+                            .clipShape(RoundedRectangle(cornerRadius: 12))
+                    } else {
+                        Text(item.rawValue)
+                            .font(.custom("Press Start 2P", size: 15))
+                            .foregroundColor(.black)
+                            .frame(width: 60, height: 30)
+                            .clipShape(RoundedRectangle(cornerRadius: 12))
+                    }
                 }
             }
         }
@@ -97,6 +116,16 @@ struct CalculatorView: View {
         case .clear:
             self.value = "0"
         
+        case .delete:
+            if self.value.count > 1 {
+                self.value.removeLast()
+            } else {
+                self.value = "0"
+            }
+        
+        case .settings:
+            self.showingSheet = true
+            
         case .decimal:
             break
             
