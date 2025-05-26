@@ -8,28 +8,42 @@
 import SwiftUI
 
 struct ContentView: View {
+    
+    @State private var isActive = false
+    
     var body: some View {
+        
         ZStack {
-            
-//            MeshGradient(
-//                width: 3,
-//                height: 3,
-//                points: [
-//                    
-//                .init(0, 0), .init(0.5, 0), .init(1, 0),
-//                .init(0, 0.5), .init(0.5, 0.5), .init(1, 0.5),
-//                .init(0, 1), .init(0.5, 1), .init(1, 1)
-//                
-//            ], colors: [
-//                .red, .purple, .indigo,
-//                .orange, .white, .blue,
-//                .yellow, .green, .mint
-//                
-//            ]) .ignoresSafeArea()
-            
-            Rectangle()
-                .fill(Color.paleCoral)
+            TimelineView(.animation) { context in
+                
+                let s = context.date.timeIntervalSince1970
+                let v = Float(sin(s)) / 4
+                
+                MeshGradient(
+                    width: 3,
+                    height: 3,
+                    
+                    points: [
+                        
+                    [0.0, 0.0], [0.5, 0.0],         [1.0, 0.0],
+                    [0.0, 0.5], [0.5 + v, 0.5 - v], [1.0, 0.3 - v],
+                    [0.0, 1.0], [0.7 - v, 1.0],     [1.0, 1.0]
+                    
+                ], colors: [
+                    .paleCoral,                             .lightOrange,   isActive ? .lightCoral : .coralPink,
+                    .coral,                                 .lightCoral,    .newPink,
+                    isActive ? .lightCoral : .lightPink,    .paleCoral,     .paleYellow
+                ])
+                .opacity(0.35)
                 .ignoresSafeArea()
+                .onAppear() {
+                    withAnimation(.easeInOut(duration: 3).repeatForever(autoreverses: true)) {
+                        isActive = true
+                    }
+                }
+                
+            
+            }
             
             CalculatorView()
             

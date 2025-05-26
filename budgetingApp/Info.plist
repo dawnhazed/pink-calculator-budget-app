@@ -4,7 +4,9 @@
 <dict>
 	<key>UIAppFonts</key>
 	<array>
+		<string>Moderniz.otf</string>
 		<string>PressStart2P.ttf</string>
+		<string>AveriaSerif-Regular.ttf</string>
 	</array>
 </dict>
 </plist>

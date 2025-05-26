@@ -12,7 +12,6 @@ struct CalculatorView: View {
     @State var value = "0"
     @State var runningNumber = 0
     @State var showingSheet = false
-    // @State var currentOperation: Operation = .none
     
     let buttons : [[CalcButton]] = [
         [.seven, .eight, .nine, .settings],
@@ -27,20 +26,21 @@ struct CalculatorView: View {
             VStack {
                 RoundedRectangle(cornerRadius: 20)
                     .fill(Color.basePink)
-                    .frame(width: 320, height: 500)
+                    .frame(width: 320, height: 440)
                     .shadow(radius: 5)
             }
             
             VStack {
                 
                 HStack {
-                    Text("OH PEACH!")
+                    Text("cashio")
+                        .font(.custom("Moderniz", size: 15))
+                        .foregroundColor(.black)
+                        .padding(.bottom, 10)
                     
                     Spacer()
-                    
-                    Text("dawnhazed")
                 }
-                .padding(.horizontal, 65)
+                .padding(.horizontal, 60)
                 
                 ZStack {
                     RoundedRectangle(cornerRadius: 20)
@@ -53,7 +53,7 @@ struct CalculatorView: View {
                     Text(value)
                         .font(.custom("Press Start 2P", size: 25))
                         
-                } .padding([.top, .bottom], )
+                }
                 
                 ForEach(buttons, id: \.self) { row in
                     HStack(spacing: 12) {
@@ -92,6 +92,12 @@ struct CalculatorView: View {
                     } else if item.rawValue == "DEL" {
                         Image(systemName: "delete.left")
                             .font(.custom("Press Start 2P", size: 15))
+                            .foregroundColor(.black)
+                            .frame(width: 60, height: 30)
+                            .clipShape(RoundedRectangle(cornerRadius: 12))
+                    } else if item.rawValue == "Enter" || item.rawValue == "AC" {
+                        Text(item.rawValue)
+                            .font(.custom("Press Start 2P", size: 10))
                             .foregroundColor(.black)
                             .frame(width: 60, height: 30)
                             .clipShape(RoundedRectangle(cornerRadius: 12))
