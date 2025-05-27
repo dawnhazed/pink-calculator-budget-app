@@ -33,7 +33,7 @@ struct CalculatorView: View {
             VStack {
                 
                 HStack {
-                    Text("cashio")
+                    Text("calculator")
                         .font(.custom("Moderniz", size: 15))
                         .foregroundColor(.black)
                         .padding(.bottom, 10)
@@ -67,7 +67,7 @@ struct CalculatorView: View {
         }
         .sheet(isPresented: $showingSheet) {
             SheetView()
-                .presentationDetents([.medium])
+                .presentationDetents([.height(250)])
         }
     }
     
@@ -81,6 +81,10 @@ struct CalculatorView: View {
                     RoundedRectangle(cornerRadius: 10)
                         .frame(width: 60, height: 30)
                         .foregroundColor(item.buttonColor)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 10)
+                                .stroke(Color.black, lineWidth: 1)
+                        )
                     
                     
                     if item.rawValue == "Settings" {

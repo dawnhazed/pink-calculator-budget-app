@@ -46,21 +46,6 @@ struct ContentView: View {
             }
             
             CalculatorView()
-            
-            HStack {
-                
-                Spacer()
-                
-                VStack {
-                    Spacer()
-                    
-                    Circle()
-                        .fill(Color.white)
-                        .frame(width: 70, height: 70)
-                    
-                }
-            }
-            .padding(30)
         }
     }
 }

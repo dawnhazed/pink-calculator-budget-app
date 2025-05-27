@@ -27,10 +27,14 @@ enum CalcButton: String {
     
     var buttonColor: Color {
         switch self {
-        case .clear, .enter:
-            return .red
+        case .enter:
+            return .coralPink
         case .triple:
-            return .gray
+            return .lightCoral
+        case .delete, .clear:
+            return .lightCoral
+        case .settings:
+            return .paleOrange
         default:
             return .white
         }
