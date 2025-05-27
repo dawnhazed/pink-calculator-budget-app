@@ -12,12 +12,13 @@ struct CalculatorView: View {
     @State var value = "0"
     @State var runningNumber = 0
     @State var showingSheet = false
+    let buttonWidth : CGFloat = 60
     
     let buttons : [[CalcButton]] = [
         [.seven, .eight, .nine, .settings],
         [.four, .five, .six, .delete],
         [.one, .two, .three, .clear],
-        [.zero, .triple, .decimal, .enter]
+        [.zero, .triple, .enter]
         
     ]
     
@@ -56,14 +57,14 @@ struct CalculatorView: View {
                             .multilineTextAlignment(.leading)
                             .frame(maxWidth: .infinity, alignment: .leading)
                             .fixedSize(horizontal: false, vertical: true)
-                            .padding(.bottom, 5)
+                            .padding(.bottom, 10)
                             
                         Text("Remaining: ")
                             .font(.custom("Press Start 2P", size: 12))
                             .multilineTextAlignment(.leading)
                             .frame(maxWidth: .infinity, alignment: .leading)
                             .fixedSize(horizontal: false, vertical: true)
-                            .padding(.bottom, 5)
+                            .padding(.bottom, 10)
                         
                         Text("End date: ")
                             .font(.custom("Press Start 2P", size: 12))
@@ -71,12 +72,12 @@ struct CalculatorView: View {
                             .frame(maxWidth: .infinity, alignment: .leading)
                             .fixedSize(horizontal: false, vertical: true)
                         
-                        Text("Amount spent: " + value)
+                        Text("Amount spent:" + value)
                             .font(.custom("Press Start 2P", size: 12))
                             .multilineTextAlignment(.leading)
                             .frame(maxWidth: .infinity, alignment: .leading)
                             .fixedSize(horizontal: false, vertical: true)
-                            .padding(.top, 100)
+                            .padding(.top, 90)
                     }
                     .padding(.leading, 80)
                 }
@@ -84,7 +85,12 @@ struct CalculatorView: View {
                 ForEach(buttons, id: \.self) { row in
                     HStack(spacing: 12) {
                         ForEach(row, id: \.self) { item in
-                            self.createButton(for: item)
+                            if item == .enter {
+                                self.createButton(for: .enter)
+                                    .frame(width: (buttonWidth * 2) + 12)
+                            } else {
+                                self.createButton(for: item)
+                            }
                         }
                     }
                     .padding(.vertical, 2)
@@ -104,35 +110,83 @@ struct CalculatorView: View {
                 
                 ZStack {
                     
-                    RoundedRectangle(cornerRadius: 10)
-                        .frame(width: 60, height: 30)
-                        .foregroundColor(item.buttonColor)
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 10)
-                                .stroke(Color.black, lineWidth: 1)
-                        )
-                    
+//                    RoundedRectangle(cornerRadius: 10)
+//                        .frame(width: 60, height: 30)
+//                        .foregroundColor(item.buttonColor)
+//                        .overlay(
+//                            RoundedRectangle(cornerRadius: 10)
+//                                .stroke(Color.black, lineWidth: 1)
+//                        )
                     
                     if item.rawValue == "Settings" {
-                        Image(systemName: "gear")
-                            .font(.custom("Press Start 2P", size: 15))
-                            .foregroundColor(.black)
+                        RoundedRectangle(cornerRadius: 10)
                             .frame(width: 60, height: 30)
-                            .clipShape(RoundedRectangle(cornerRadius: 12))
+                            .foregroundColor(item.buttonColor)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 10)
+                                    .stroke(Color.black, lineWidth: 1)
+                            )
+                        
+                        Image("settings")
+                            .resizable()
+                            .scaledToFill()
+                            .foregroundColor(.black)
+                            .frame(width: 20, height: 20)
+                        
                     } else if item.rawValue == "DEL" {
-                        Image(systemName: "delete.left")
-                            .font(.custom("Press Start 2P", size: 15))
+                        RoundedRectangle(cornerRadius: 10)
+                            .frame(width: 60, height: 30)
+                            .foregroundColor(item.buttonColor)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 10)
+                                    .stroke(Color.black, lineWidth: 1)
+                            )
+                        
+                        Image("arrow")
+                            .resizable()
+                            .scaledToFill()
+                            .foregroundColor(.black)
+                            .frame(width: 25, height: 25)
+                    } else if item.rawValue == "AC" {
+                        RoundedRectangle(cornerRadius: 10)
+                            .frame(width: 60, height: 30)
+                            .foregroundColor(item.buttonColor)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 10)
+                                    .stroke(Color.black, lineWidth: 1)
+                            )
+                        
+                        Text(item.rawValue)
+                            .font(.custom("Press Start 2P", size: 10))
                             .foregroundColor(.black)
                             .frame(width: 60, height: 30)
                             .clipShape(RoundedRectangle(cornerRadius: 12))
-                    } else if item.rawValue == "Enter" || item.rawValue == "AC" {
+                        
+                    } else if item.rawValue == "Enter" {
+                        RoundedRectangle(cornerRadius: 10)
+                            .frame(width: 130, height: 30)
+                            .foregroundColor(item.buttonColor)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 10)
+                                    .stroke(Color.black, lineWidth: 1)
+                            )
+                        
                         Text(item.rawValue)
                             .font(.custom("Press Start 2P", size: 10))
                             .foregroundColor(.black)
                             .frame(width: 60, height: 30)
                             .clipShape(RoundedRectangle(cornerRadius: 12))
                     } else {
+                        RoundedRectangle(cornerRadius: 10)
+                        .frame(width: 60, height: 30)
+                        .foregroundColor(item.buttonColor)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 10)
+                                .stroke(Color.black, lineWidth: 1)
+                        )
+                        
                         Text(item.rawValue)
+                        
                             .font(.custom("Press Start 2P", size: 15))
                             .foregroundColor(.black)
                             .frame(width: 60, height: 30)

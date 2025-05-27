@@ -43,6 +43,16 @@ struct SheetView: View {
                 
                 Form {
                     TextField("Enter Your Budget", text: $budget)
+                        .keyboardType(.numberPad)
+                        .toolbar {
+                            ToolbarItemGroup(placement: .keyboard) {
+                                Spacer()
+                                Button("Done") {
+                                    hideKeyboard()
+                                }
+                                .fontWeight(.bold)
+                            }
+                        }
                     
                     DatePicker("End Date", selection: $saveDate, displayedComponents: .date)
                 }
@@ -51,6 +61,13 @@ struct SheetView: View {
                 Spacer()
             }
         }
+    }
+}
+
+
+extension View {
+    func hideKeyboard() {
+        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
     }
 }
 
