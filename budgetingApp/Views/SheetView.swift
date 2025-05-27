@@ -42,10 +42,12 @@ struct SheetView: View {
                 .padding()
                 
                 Form {
-                    TextField("Budget", text: $budget)
+                    TextField("Enter Your Budget", text: $budget)
+                    
                     DatePicker("End Date", selection: $saveDate, displayedComponents: .date)
                 }
-                
+                .scrollContentBackground(.hidden)
+                .padding(.top, -40)
                 Spacer()
             }
         }

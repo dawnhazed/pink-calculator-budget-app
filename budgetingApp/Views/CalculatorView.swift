@@ -33,8 +33,8 @@ struct CalculatorView: View {
             VStack {
                 
                 HStack {
-                    Text("calculator")
-                        .font(.custom("Moderniz", size: 15))
+                    Text("CALC")
+                        .font(.custom("Press Start 2P", size: 15))
                         .foregroundColor(.black)
                         .padding(.bottom, 10)
                     
@@ -50,9 +50,35 @@ struct CalculatorView: View {
                             .white.shadow(.inner(color: .black.opacity(0.4), radius: 3, x: 1, y: 1))
                         )
                     
-                    Text(value)
-                        .font(.custom("Press Start 2P", size: 25))
+                    VStack (alignment: .leading){
+                        Text("Current: ")
+                            .font(.custom("Press Start 2P", size: 12))
+                            .multilineTextAlignment(.leading)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .fixedSize(horizontal: false, vertical: true)
+                            .padding(.bottom, 5)
+                            
+                        Text("Remaining: ")
+                            .font(.custom("Press Start 2P", size: 12))
+                            .multilineTextAlignment(.leading)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .fixedSize(horizontal: false, vertical: true)
+                            .padding(.bottom, 5)
                         
+                        Text("End date: ")
+                            .font(.custom("Press Start 2P", size: 12))
+                            .multilineTextAlignment(.leading)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .fixedSize(horizontal: false, vertical: true)
+                        
+                        Text("Amount spent: " + value)
+                            .font(.custom("Press Start 2P", size: 12))
+                            .multilineTextAlignment(.leading)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .fixedSize(horizontal: false, vertical: true)
+                            .padding(.top, 100)
+                    }
+                    .padding(.leading, 80)
                 }
                 
                 ForEach(buttons, id: \.self) { row in
@@ -67,7 +93,7 @@ struct CalculatorView: View {
         }
         .sheet(isPresented: $showingSheet) {
             SheetView()
-                .presentationDetents([.height(250)])
+                .presentationDetents([.height(180)])
         }
     }
     
