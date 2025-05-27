@@ -12,7 +12,13 @@ struct CalculatorView: View {
     @State var value = "0"
     @State var runningNumber = 0
     @State var showingSheet = false
+    
     let buttonWidth : CGFloat = 60
+    
+    @AppStorage("current")private var current: Int = 0
+    @State private var currentText: String = ""
+    
+    @AppStorage("remaining")private var remaining: Int = 0
     
     let buttons : [[CalcButton]] = [
         [.seven, .eight, .nine, .settings],
@@ -52,14 +58,14 @@ struct CalculatorView: View {
                         )
                     
                     VStack (alignment: .leading){
-                        Text("Current: ")
+                        Text("Current:" + String(current))
                             .font(.custom("Press Start 2P", size: 12))
                             .multilineTextAlignment(.leading)
                             .frame(maxWidth: .infinity, alignment: .leading)
                             .fixedSize(horizontal: false, vertical: true)
                             .padding(.bottom, 10)
                             
-                        Text("Remaining: ")
+                        Text("Remaining:" + String(remaining))
                             .font(.custom("Press Start 2P", size: 12))
                             .multilineTextAlignment(.leading)
                             .frame(maxWidth: .infinity, alignment: .leading)
@@ -200,8 +206,11 @@ struct CalculatorView: View {
         switch button {
             
         case .enter:
-            let runningValue = self.runningNumber
+            //let runningValue = self.runningNumber
             let currentValue = Int(self.value) ?? 0
+            
+            remaining = current - currentValue
+            value = "0"
             
         case .clear:
             self.value = "0"

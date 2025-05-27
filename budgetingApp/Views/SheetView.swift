@@ -16,6 +16,9 @@ struct SheetView: View {
     
     @Environment(\.dismiss) private var dismiss
     
+    @AppStorage("current")private var current: Int = 0
+    @State private var currentText: String = ""
+    
     var body: some View {
         ZStack {
             
@@ -42,12 +45,16 @@ struct SheetView: View {
                 .padding()
                 
                 Form {
-                    TextField("Enter Your Budget", text: $budget)
+                    TextField("Enter Your Budget", text: $currentText)
                         .keyboardType(.numberPad)
+                        .onAppear {
+                            currentText = String(current)
+                        }
                         .toolbar {
                             ToolbarItemGroup(placement: .keyboard) {
                                 Spacer()
                                 Button("Done") {
+                                    current = Int(currentText) ?? 0
                                     hideKeyboard()
                                 }
                                 .fontWeight(.bold)
