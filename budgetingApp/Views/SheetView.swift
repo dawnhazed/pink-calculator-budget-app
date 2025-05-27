@@ -19,6 +19,8 @@ struct SheetView: View {
     @AppStorage("current")private var current: Int = 0
     @State private var currentText: String = ""
     
+    @AppStorage("remaining")private var remaining: Int = 0
+    
     var body: some View {
         ZStack {
             
@@ -48,24 +50,38 @@ struct SheetView: View {
                     TextField("Enter Your Budget", text: $currentText)
                         .keyboardType(.numberPad)
                         .onAppear {
-                            currentText = String(current)
-                        }
-                        .toolbar {
-                            ToolbarItemGroup(placement: .keyboard) {
-                                Spacer()
-                                Button("Done") {
-                                    current = Int(currentText) ?? 0
-                                    hideKeyboard()
-                                }
-                                .fontWeight(.bold)
+                            if current > 0 {
+                                currentText = String(current)
+                            } else {
+                                currentText = ""
                             }
+                            
                         }
                     
                     DatePicker("End Date", selection: $saveDate, displayedComponents: .date)
                 }
                 .scrollContentBackground(.hidden)
                 .padding(.top, -40)
+                
                 Spacer()
+            }
+            
+            
+        }
+        
+        .toolbar {
+            ToolbarItemGroup(placement: .keyboard) {
+                Button("Reset All") {
+                    current = 0
+                    currentText = ""
+                    remaining = 0
+                }
+                Spacer()
+                Button("Done") {
+                    current = Int(currentText) ?? 0
+                    hideKeyboard()
+                }
+                .fontWeight(.bold)
             }
         }
     }
