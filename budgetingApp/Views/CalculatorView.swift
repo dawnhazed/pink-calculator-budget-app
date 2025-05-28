@@ -209,7 +209,11 @@ struct CalculatorView: View {
             //let runningValue = self.runningNumber
             let currentValue = Int(self.value) ?? 0
             
-            remaining = current - currentValue
+            if remaining == 0 {
+                remaining = current - currentValue
+            } else {
+                remaining = remaining - currentValue
+            }
             value = "0"
             
         case .clear:
