@@ -58,14 +58,14 @@ struct CalculatorView: View {
                         )
                     
                     VStack (alignment: .leading){
-                        Text("Current:" + String(current))
+                        Text("Current:" + String(current.formatted))
                             .font(.custom("Press Start 2P", size: 12))
                             .multilineTextAlignment(.leading)
                             .frame(maxWidth: .infinity, alignment: .leading)
                             .fixedSize(horizontal: false, vertical: true)
                             .padding(.bottom, 10)
                             
-                        Text("Remaining:" + String(remaining))
+                        Text("Remaining:" + String(remaining.formatted))
                             .font(.custom("Press Start 2P", size: 12))
                             .multilineTextAlignment(.leading)
                             .frame(maxWidth: .infinity, alignment: .leading)
@@ -78,7 +78,7 @@ struct CalculatorView: View {
                             .frame(maxWidth: .infinity, alignment: .leading)
                             .fixedSize(horizontal: false, vertical: true)
                         
-                        Text("Amount spent:" + value)
+                        Text("Amount spent:" + value.formattedWithDots)
                             .font(.custom("Press Start 2P", size: 12))
                             .multilineTextAlignment(.leading)
                             .frame(maxWidth: .infinity, alignment: .leading)
@@ -115,14 +115,6 @@ struct CalculatorView: View {
             }) {
                 
                 ZStack {
-                    
-//                    RoundedRectangle(cornerRadius: 10)
-//                        .frame(width: 60, height: 30)
-//                        .foregroundColor(item.buttonColor)
-//                        .overlay(
-//                            RoundedRectangle(cornerRadius: 10)
-//                                .stroke(Color.black, lineWidth: 1)
-//                        )
                     
                     if item.rawValue == "Settings" {
                         RoundedRectangle(cornerRadius: 10)
@@ -241,6 +233,24 @@ struct CalculatorView: View {
                 self.value = "\(self.value)\(number)"
             }
         }
+    }
+}
+
+extension Int {
+    var formatted: String {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        formatter.groupingSeparator = "."
+        formatter.usesGroupingSeparator = true
+        
+        return formatter.string(from: NSNumber(value: self)) ?? String(self)
+    }
+}
+
+extension String {
+    var formattedWithDots: String {
+        guard let number = Int(self) else { return self }
+        return number.formatted
     }
 }
 
