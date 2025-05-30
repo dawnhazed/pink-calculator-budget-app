@@ -20,6 +20,7 @@ struct CalculatorView: View {
     
     @AppStorage("remaining")private var remaining: Int = 0
     
+    @AppStorage("date")private var date: Date = Date()
     let buttons : [[CalcButton]] = [
         [.seven, .eight, .nine, .settings],
         [.four, .five, .six, .delete],
@@ -27,6 +28,12 @@ struct CalculatorView: View {
         [.zero, .triple, .enter]
         
     ]
+    
+    private var dateOnly: String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "dd-MM-yyyy"
+        return dateFormatter.string(from: date)
+    }
     
     var body: some View {
         ZStack {
@@ -72,7 +79,7 @@ struct CalculatorView: View {
                             .fixedSize(horizontal: false, vertical: true)
                             .padding(.bottom, 10)
                         
-                        Text("End date: ")
+                        Text("End date:" + dateOnly)
                             .font(.custom("Press Start 2P", size: 12))
                             .multilineTextAlignment(.leading)
                             .frame(maxWidth: .infinity, alignment: .leading)
@@ -184,7 +191,6 @@ struct CalculatorView: View {
                         )
                         
                         Text(item.rawValue)
-                        
                             .font(.custom("Press Start 2P", size: 15))
                             .foregroundColor(.black)
                             .frame(width: 60, height: 30)

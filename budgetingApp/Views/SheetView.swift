@@ -10,7 +10,7 @@ import SwiftUI
 struct SheetView: View {
     
     @State private var budget: String = ""
-    @State private var saveDate = Date()
+   // @State private var saveDate = Date()
     
     @FocusState private var isFocused: Bool //= false
     
@@ -20,6 +20,9 @@ struct SheetView: View {
     @State private var currentText: String = ""
     
     @AppStorage("remaining")private var remaining: Int = 0
+    
+    @AppStorage("date")private var date: Date = Date()
+    @AppStorage("endDate") private var endDate: Double = Date().timeIntervalSince1970
     
     var body: some View {
         ZStack {
@@ -58,7 +61,7 @@ struct SheetView: View {
                             
                         }
                     
-                    DatePicker("End Date", selection: $saveDate, displayedComponents: .date)
+                    DatePicker("End Date", selection: $date, displayedComponents: .date)
                 }
                 .scrollContentBackground(.hidden)
                 .padding(.top, -40)
@@ -85,6 +88,7 @@ struct SheetView: View {
             }
         }
     }
+    
 }
 
 
