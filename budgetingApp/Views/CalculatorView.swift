@@ -240,6 +240,22 @@ struct CalculatorView: View {
             }
         }
     }
+    
+    private func checkDate() {
+        let today = Calendar.current.startOfDay(for: Date())
+        let resetDay = Calendar.current.startOfDay(for: date)
+                
+        if today >= resetDay {
+            resetData()
+        }
+    }
+    
+    private func resetData() {
+        current = 0
+        currentText = ""
+        remaining = 0
+        date = Date.distantPast
+    }
 }
 
 extension Int {
